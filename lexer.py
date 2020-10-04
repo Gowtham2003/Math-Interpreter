@@ -1,10 +1,11 @@
-from tokens import Token,TokenType
+from tokens import Token, TokenType
 
 WHITESPACE = " \n\t"
-DIGITS     = "0123456789"
+DIGITS = "0123456789"
+
 
 class Lexer:
-    def __init__(self,text):
+    def __init__(self, text):
         self.text = iter(text)
         self.advance()
 
@@ -15,7 +16,7 @@ class Lexer:
             self.current_char = None
 
     def generate_tokens(self):
-        while self.current_char != None:
+        while self.current_char is not None:
             if self.current_char in WHITESPACE:
                 self.advance()
             elif self.current_char == '.' or self.current_char in DIGITS:
@@ -46,12 +47,13 @@ class Lexer:
         number_str = self.current_char
         self.advance()
 
-        while self.current_char != None and (self.current_char == '.' or self.current_char in DIGITS):
+        while self.current_char is not None and (
+                self.current_char == '.' or self.current_char in DIGITS):
             if self.current_char == '.':
                 decimal_point_count += 1
                 if decimal_point_count > 1:
                     break
-            
+
             number_str += self.current_char
             self.advance()
 
@@ -61,4 +63,3 @@ class Lexer:
             number_str += '0'
 
         return Token(TokenType.NUMBER, float(number_str))
-
